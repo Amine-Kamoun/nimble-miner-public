@@ -41,3 +41,19 @@ make install
 pip uninstall fsspec -y
 
 pip install 'fsspec==2023.10.0'
+
+
+# Prompt the user for the number of miners
+read -p "Enter the number of miners (maximum 10): " num_miners
+
+if [[ $num_miners -gt 10 ]]; then
+    echo "Maximum number of miners allowed is 10. Setting the number of miners to 10."
+    num_miners=10
+fi
+
+# Activate the miners
+for ((i=1; i<=$num_miners; i++)); do
+    read -p "Enter the address for miner $i: " addr
+    tmux new-session -d -s Nimble$i "cd /root/nimble/nimble-miner-public/ && source ./nimenv_localminers/bin/activate && export CUDA_VISIBLE_DEVICES=$((i-1)) && make run addr=$addr"
+    tmux detach -s Nimble$i
+done
