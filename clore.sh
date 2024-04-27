@@ -5,9 +5,7 @@
 sudo apt update
 sudo apt install tmux -y && sudo apt install build-essential -y && sudo apt install make -y
 wget https://go.dev/dl/go1.22.1.linux-amd64.tar.gz
-sudo su
 sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.22.1.linux-amd64.tar.gz
-exit
 export PATH=$PATH:/usr/local/go/bin
 
 # Install python3 environment
